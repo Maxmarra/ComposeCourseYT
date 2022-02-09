@@ -7,6 +7,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
+import androidx.compose.material.ProgressIndicatorDefaults.IndicatorBackgroundOpacity
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -23,53 +24,8 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-
-            val scaffoldState = rememberScaffoldState()
-            //делегируем с by, поэтому в textFieldState
-            //уже сразу строка
-            var textFieldState by remember{
-                mutableStateOf("")
-            }
-            val scope = rememberCoroutineScope()
-
-            Scaffold(
-                modifier = Modifier.fillMaxSize(),
-                scaffoldState = scaffoldState
-            ) {
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.Center,
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(horizontal = 30.dp)
-                ) {
-                    TextField(
-                        value = textFieldState,
-                        label = {
-                        Text("Enter your name")
-                    },
-                      onValueChange = {
-                          textFieldState = it
-                      },
-                        singleLine = true,
-                        modifier = Modifier.fillMaxWidth()
-                    )
-                   Spacer(modifier = Modifier.height(16.dp))
-                    Button(onClick = {
-                        scope.launch {
-                            scaffoldState
-                                .snackbarHostState
-                                .showSnackbar("Hello $textFieldState")
-                        }
-                    }
-                    )
-                    {
-                        Text("please greet me")
-                    }
-                }
-
-
-            }
+            LinearProgressIndicator(progress = 5.0f)
+        
         }
     }
 }
@@ -77,8 +33,16 @@ class MainActivity : ComponentActivity() {
 
 
 
-
-
+@Composable
+fun LinearProgressIndicator(
+    progress: Float?,
+    modifier: Modifier? = Modifier,
+    color: Color? = MaterialTheme.colors.primary,
+    backgroundColor: Color? = color?.copy(alpha = IndicatorBackgroundOpacity)
+): Unit
+{
+    
+}
 
 
 
